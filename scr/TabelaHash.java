@@ -32,4 +32,46 @@ public class TabelaHash {
         ultimasSondagens = sondagens;
         return -1;
     }
+
+    public int inserir(char[] chave, int tamanho, int indice) {
+        int h = FuncoesHash.calcular(funcao, chave, tamanho);
+        int posicao = FuncoesHash.posicao(h, capacidade);
+        if (posicoes[posicao] != null) {
+            ultimaColisao = 1;
+        } else {
+            ultimaColisao = 0;
+        }
+        int sondagens = 0;
+        NoHash atual = posicoes[posicao];
+        while (atual != null) {
+            sondagens++;
+            if (Texto.iguais(atual.chave, atual.tamanho, chave, tamanho) == 1) {
+                ultimasSondagens = sondagens;
+                return atual.indice;
+            }
+            atual = atual.proximo;
+        }
+        ultimasSondagens = sondagens;
+        NoHash novo = new NoHash(chave, tamanho, indice);
+        novo.Proximo = posicoes[posicao];
+        posicoes[posicao] = novo;
+        quantidadeChaves++;
+        return indice;
+    }
+
+    public int maiorLista() {
+        int maior = 0;
+        for (int p = 0; p < capacidade; p++) {
+            int tamanhoLsita = 0;
+            NoHash atual = posicoes[p];
+            while (atual != null) {
+                tamanhoLista++;
+                atual = atual.proximo;
+            }
+            if (tamanhoLista > maior) {
+                maior = tamanhoLista;
+            }
+        }
+        return maior;
+    }
 }
