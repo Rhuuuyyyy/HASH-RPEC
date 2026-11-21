@@ -41,3 +41,99 @@ public class LeitorCsv {
         nome = new CampoTexto(64);
         nota = new CampoTexto(16);
     }
+
+    public void fechar() throws IOException {
+        leitor.close();
+    }
+
+        private int lerCaractere() throws IOException {
+        if (posicaoBloco >= tamanhoBloco) {
+            tamanhoBloco = leitor.read(bloco, 0, TAMANHO_BLOCO);
+            posicaoBloco = 0;
+            if (tamanhoBloco <= 0) {
+                tamanhoBloco = 0;
+                return -1;
+            }
+        }
+        char c = bloco[posicaoBloco];
+        posicaoBloco++;
+        return c;
+    }
+
+    private CampoTexto escolherDestino(int coluna) {
+        if (coluna == COLUNA_TITULO) {
+            return titulo;
+        }
+        if (coluna == COLUNA_USUARIO) {
+            return usuario;
+        }
+        if (coluna == COLUNA_NOME) {
+            return nome;
+        }
+        if (coluna == COLUNA_NOTA) {
+            return nota;
+        }
+        return null;
+    }
+
+    private void guardar(char c) {
+        if (destino != null) {
+            destino.adicionar(c);
+        }
+    }
+
+    public int proximoRegistro() throws IOException {
+        titulo.limpar();
+        usuario.limpar();
+        nome.limpar();
+        nota.limpar();
+        indiceCampo = 0;
+        destino = escolherDestino(0);
+        int estado = INICIO_CAMPO;
+        int temConteudo = 0;
+
+        while (true) {
+            int lido = lerCaractere();
+            if (lido == -1) {
+                if (temConteudo == 0) {
+                    return 0;
+                }
+                quantidadeCampos = indiceCampo + 1;
+                return 1;
+            }
+            char c = (char) lido;
+
+            if (estado == CAMPO_ENTRE_ASPAS) {
+                temConteudo = 1;
+                if (c == '"') {
+                    estado = ASPAS_VISTA;
+                } else {
+                    guardar(c);
+                }
+            } else if (estado == ASPAS_VISTA && c == '"') {
+                guardar('"');
+                estado = CAMPO_ENTRE_ASPAS;
+            } else if (c == ',') {
+                temConteudo = 1;
+                indiceCampo++;
+                destino = escolherDestino(indiceCampo);
+                estado = INICIO_CAMPO;
+            } else if (c == '\n') {
+                if (temConteudo == 0) {
+                    continue;
+                }
+                quantidadeCampos = indiceCampo + 1;
+                return 1;
+            } else if (c == '\r') {
+
+            } else if (estado == INICIO_CAMPO && c == '"') {
+                temConteudo = 1;
+                estado = CAMPO_ENTRE_ASPAS;
+            } else {
+                temConteudo = 1;
+                guardar(c);
+                estado = CAMPO_SIMPLES;
+            }
+        }
+    }
+}
