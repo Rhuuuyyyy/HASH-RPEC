@@ -24,7 +24,7 @@ public class TabelaHash {
         while(atual != null) {
             sondagens++;
             if(Texto.iguais(atual.chave, atual.tamanho, chave, tamanho) == 1) {
-                ultimas sondagens = sondagens;
+                ultimasSondagens = sondagens;
                 return atual.indice;
             }
             atual = atual.proximo;
@@ -53,7 +53,7 @@ public class TabelaHash {
         }
         ultimasSondagens = sondagens;
         NoHash novo = new NoHash(chave, tamanho, indice);
-        novo.Proximo = posicoes[posicao];
+        novo.proximo = posicoes[posicao];
         posicoes[posicao] = novo;
         quantidadeChaves++;
         return indice;
@@ -62,7 +62,7 @@ public class TabelaHash {
     public int maiorLista() {
         int maior = 0;
         for (int p = 0; p < capacidade; p++) {
-            int tamanhoLsita = 0;
+            int tamanhoLista = 0;
             NoHash atual = posicoes[p];
             while (atual != null) {
                 tamanhoLista++;

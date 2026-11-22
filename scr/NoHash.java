@@ -1,5 +1,5 @@
 public class NoHash {
-    public char[];
+    public char[] chave;
     public int tamanho;
     public int indice;
     public NoHash proximo;

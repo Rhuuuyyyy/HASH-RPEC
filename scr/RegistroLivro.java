@@ -7,7 +7,7 @@ public class RegistroLivro {
     public RegistroLivro(char[] titulo, int tamanhoTitulo) {
         this.titulo = titulo;
         this.tamanhoTitulo = tamanhoTitulo;
-        this.somaCenteismos = 0;
+        this.somaCentesimos = 0;
         this.n = 0;
     }
 }
