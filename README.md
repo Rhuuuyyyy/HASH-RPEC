@@ -42,7 +42,7 @@ mkdir saida
 java -Xmx1g -cp out Principal "C:\dados\Books_rating.csv" saida user_id.txt
 ```
 
-Com a base completa leva uns 20 segundos.
+Com a base completa leva cerca de 30 segundos.
 
 ## O que é gerado
 
