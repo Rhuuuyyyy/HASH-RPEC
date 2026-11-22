@@ -5,7 +5,7 @@ Trabalho prático de Tabelas Hash, da disciplina de Resolução de Problemas Est
 Feito por Rhyan Rocha e Augusto Neon.
 
 - Repositório: https://github.com/Rhuuuyyyy/HASH-RPEC
-- Vídeo: 
+- Vídeo: https://www.youtube.com/watch?v=tnMbb7iYvKw
 
 ## O que o programa faz
 
